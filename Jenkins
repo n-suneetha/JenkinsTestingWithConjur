@@ -6,11 +6,13 @@ pipeline {
                 script {
                     userVar = null
                     passVar = null
-                    withCredentials([conjurSecretCredential(credentialsId: 'multibranch-pipeline-credential-1', variable: 'CONJUR_SECRET')]) {
-                                 userVar = CONJUR_SECRET
-                                 echo "Username: CONJUR_SECRET"
+withCredentials([conjurSecretUsername(credentialsId: 'ConjurSecretUsernameCredentialmultibranchpipelinecredential1', passwordVariable: 'CONJUR_SECRET', usernameVariable: 'USERNAME')]) {
+                                 userVar = USERNAME
+                                 passVar = CONJUR_SECRET
                     }
                     echo "Username: ${userVar}"
+                    echo "Username: ${passVar}"
+                    
                 }
             }
         }
