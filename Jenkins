@@ -1,24 +1,19 @@
 pipeline {
     agent any
- 
- 
     stages {
-        stage('Folder Pieline  Job') {
-            parallel {
-                stage('Job 1') {
-                    steps {
-                        withCredentials([conjurSecretCredential(credentialsId: 'multibranch-secret-1', variable: 'CONJUR_SECRET')]) {
-                            sh 'echo Running parallel Job 1 with $CONJUR_SECRET'
-                        }
+        stage("run") {
+             steps {
+                script {
+                    userVar = null
+                    passVar = null
+                    withCredentials([conjurSecretCredential(credentialsId: 'sample-freestylejob-credential-1', variable: 'CONJUR_SECRET')]) {
+                                 userVar = CONJUR_SECRET
+                                 echo "Username: CONJUR_SECRET"
                     }
+                    echo "Username: ${userVar}"
                 }
-                stage('Job 2') {
-                    steps {
-                        withCredentials([conjurSecretCredential(credentialsId: 'multibranch-secret-2', variable: 'CONJUR_SECRET')]) {
-                            sh 'echo Running parallel job 2 with $CONJUR_SECRET'
-                        }
-                    }
-                }
-                
-            }}}}
+            }
+        }
+    }
+}
  
